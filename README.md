@@ -10,7 +10,7 @@ IoT system containg web, mobile and desktop apps to operate **Sense HAT** sensor
 Authors:</br>
 
 - [Maksymilian Pływaczyk](https://github.com/Maksymilian-Plywaczyk)
-- [Kuba Marciniak]()
+- [Kuba Marciniak](https://github.com/Kuba-Mar)
 - [Jakub Grabowski](https://github.com/jakgrab)
 - [Filip Patyk](https://github.com/drfifonz)
 
