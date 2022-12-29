@@ -24,9 +24,7 @@ conda env create -f env.yml
 ```
 or install manualy dependencies from [env.yml](/env.yml) file. 
 </br>
-Start local http server by running following command:
-```bash
-```
+
 
 Sense HAT emulation
 ----
