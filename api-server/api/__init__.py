@@ -1,3 +1,3 @@
-__all__ = ["SenseHatParameters"]
+__all__ = ["HelloWorld", "SenseHatParameters"]
 
-from .controller import SenseHatParameters
+from .controller import HelloWorld, SenseHatParameters
