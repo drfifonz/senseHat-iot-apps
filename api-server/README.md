@@ -17,9 +17,51 @@ Requests
 RESTful service use JSON  data format, add `Content-Type: application/json` to header.
 
 | KEY        | VALUE  | BODY | URL  | Method | Description | 
-| :---------:| :-----:| :---:| :---:| :-----:|:-----------|
+| :---------:| :-----:| :----| :---:| :-----:|:-----------|
 | -     | -  | - |`/hello`| GET| Returns hello world (for test purpouse)|
-| || |`/`| GET |
+|- | - |`"temperature": string [c \| f]*`</br>`"humidity":string [% \| number in range(0-1)]`</br>`"pressure": string [hpa \| mmHg]",`</br>`"orientation":string [d \| r],`</br>`"joystick"` |`/`| GET |Returns parameters like:</br>*temperature* (celcius or farenheit)</br>*humidity* (% or in range of 0-1)</br>*pressure* (hPa or mmHg)</br>*orientation* (degrees or radians)</br>*joystick* |
+| - |-|**see below**|/| POST | Control diodes | 
+
+##### \* acceptable values
+
+
+### Example
+
+
+<div style="float: left; width: 50%;">
+  <p>Request body:</p>
+    <p>
+
+```json
+{
+    "temperature":"c",
+    "humidity":"%",
+    "pressure": "hpa",
+    "orientation":"d"
+}
+```
+</p>
+</div>
+<div tyle="float: right; width: 50%;">
+    <p>Response:</p>
+    <p>
+
+```json
+{
+    "humidity": 50,
+    "orientation": [
+        332.48,
+        123.82,
+        171.97
+    ],
+    "pressure": 1022,
+    "temperature": 30
+}
+```
+</p>
+</div>
+
+
 
 Diodes control
 --

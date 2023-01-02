@@ -1,8 +1,8 @@
 import json
 from flask import make_response
-from flask_restful import Resource, reqparse,
+from flask_restful import Resource, reqparse
 
-from infrastructure import Diode
+from infrastructure import Diode, Joystick, Sensors
 
 
 class HelloWorld(Resource):
@@ -16,18 +16,27 @@ class SenseHatParameters(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("temperature", type=str)
         parser.add_argument("humidity", type=str)
-        parser.add_argument("position", type=str)
+        parser.add_argument("orientation", type=str)
         parser.add_argument("pressure", type=str)
+        parser.add_argument("joystick")
         args = parser.parse_args()
-        print(args)
 
-        response = {
-            "temperature": 123,
-            "humidity": 70,
-            "position": [1, 2, 3],
-            "pressure": 1001,
-        }
-        return response
+        sensors = Sensors("")
+        joystick = Joystick("")
+
+        message = {}
+        if args.temperature:
+            message["temperature"] = sensors.get_temperature(args.temperature)
+        if args.humidity:
+            message["humidity"] = sensors.get_humidity(args.humidity)
+        if args.pressure:
+            message["pressure"] = sensors.get_pressure(args.pressure)
+        if args.orientation:
+            message["orientation"] = sensors.get_orientation(args.orientation)
+
+        code = 200 if all(list(message.values())) else 400
+
+        return make_response(message, code)
 
     def post(self):
         parser = reqparse.RequestParser()
