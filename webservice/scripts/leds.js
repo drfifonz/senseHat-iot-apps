@@ -42,7 +42,7 @@ function updateColor() {
   return rgb
 }
 
-let request_body = {"requests":[]}
+let request_body = {requests:[]}
 function appendToRequests(led){
   request_body['requests'].push(led);
 }
@@ -74,8 +74,9 @@ function getRequest() {
   console.log("JSON: ",convertToJSON(request_body))
 	fetch("http://localhost:5000/",{
     method:'POST',
-    body:JSON.stringify(convertToJSON(request_body)),
-    mode:'no-cors'
+    body:JSON.stringify(request_body),
+    headers: {'Content-Type': 'application/json','Accept':'application/json'},
+    mode:'cors'
   })
 	.then((response) => { 
     console.log(response)

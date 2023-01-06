@@ -59,4 +59,8 @@ class SenseHatParameters(Resource):
         except TypeError:
             message, code = "Missing parameters.", 400
 
-        return make_response(message, code)
+        response = make_response(message, code)
+        # response.headers["Access-Control-Allow-Origin"] = "http://localhost:5000"
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
+        # return message, code, {"Access-Control-Allow-Origin": "*"}
