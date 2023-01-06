@@ -1,10 +1,10 @@
 const sampleTimeSec = 0.1;                  ///< sample time in sec
 const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "http://localhost:5000/hello";
+const url = "http://cab6-85-221-155-134.ngrok.io/hello";
 var timer;
 
 var temperature;
-
+	
 var humidity;
 var pressure;
 var orientantion;
@@ -27,28 +27,30 @@ function startTimer(){
   timer = setInterval(getRequest(),sampleTimeMsec);
 }
 function getRequest() {
-	fetch(url,{
+	const url = "http://cab6-85-221-155-134.ngrok.io/hello";
+	fetch("http://localhost:5000/hello",{
     method:'GET',
-    headers:{"Content-Type":"application/json"}
+		mode:'no-cors',
+		headers: {
+      'Content-Type': 'application/json'
+    },
   })
-	.then((response) => { 
-		console.log(response)
-		if (response.ok){
-      console.log(response.json()); 
-			return response.json();
+	.then((response) => {
+		console.log(response.status)
+		if (response.status === 200){
+			console.log(response);
+			return response;
     }
 		else 
 			return Promise.reject(response);
 		
 	})
 	.then((responseJSON) => {
-		console.log(responseJSON.data);
 		// document.getElementById("response").value = JSON.stringify(responseJSON);
 		// document.getElementById("json").value = responseJSON.data;
 		
 	})
 	.catch((error) => {
-		console.log(error)
 		var errMsg = '<font color="red">Error: ';
 		if(error.status != null)
 			errMsg += error.statusText + ' (' + error.status + ')</font>';

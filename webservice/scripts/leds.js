@@ -1,7 +1,7 @@
 
 const sampleTimeSec = 0.1;                  ///< sample time in sec
 const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "http://localhost:5000/";
+const url = "http://cab6-85-221-155-134.ngrok.io/";
 var timer;
 
 function hslToRgb(h, s, l) {
@@ -42,14 +42,14 @@ function updateColor() {
   return rgb
 }
 
-let request_body = {"request":[]}
+let request_body = {"requests":[]}
 function appendToRequests(led){
-  request_body['request'].push(led);
+  request_body['requests'].push(led);
 }
 
 
 function convertToJSON(req){
-  let dict_to_json = JSON.parse(req);
+  var dict_to_json = JSON.stringify(req);
   return dict_to_json
 }
 
@@ -58,7 +58,7 @@ var tiles = document.querySelectorAll('.tile');
 tiles.forEach(function (tile) {
   tile.addEventListener('click', function () {
     this.style.backgroundColor = 'rgb('+updateColor().join(',')+')';
-    let led_info = {"position":[this.dataset.x,this.dataset.y],"rgb":updateColor()}
+    let led_info = {"position":[parseInt(this.dataset.x),parseInt(this.dataset.y)],"rgb":updateColor()}
     appendToRequests(led_info);
   });
  
@@ -66,28 +66,25 @@ tiles.forEach(function (tile) {
 
 function getLandingPage(){
   parent.location = "index.html"
-}
-function getRequest() {
-  console.log(request_body)
-	fetch(url,{
+} 
+
+
+console.log(request_body) 
+function getRequest() { 
+  console.log("JSON: ",convertToJSON(request_body))
+	fetch("http://localhost:5000/",{
     method:'POST',
-    body:request_body,
-    headers:{"Content-Type":"application/json"}
+    body:JSON.stringify(convertToJSON(request_body)),
+    mode:'no-cors'
   })
 	.then((response) => { 
-	
+    console.log(response)
 		if (response.ok){
       console.log(response.json()); 
 			return response.json();
     }
 		else 
 			return Promise.reject(response);
-		
-	})
-	.then((responseJSON) => {
-		
-		document.getElementById("response").value = JSON.stringify(responseJSON);
-		document.getElementById("json").value = responseJSON.data;
 		
 	})
 	.catch((error) => {

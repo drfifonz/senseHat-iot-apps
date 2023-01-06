@@ -11,7 +11,7 @@ var chart;         ///< Chart.js object
 
 var timer; ///< request timer
 
-const url = 'http://localhost/server mock/chartdata.json'; ///< server app with JSON API
+const url = 'http://localhost:5000/'; ///< server app with JSON API
 //const url = 'http://' + window.location.hostname + '/nocache/chartdata.json'
 
 /**
@@ -68,10 +68,7 @@ function stopTimer(){
 */
 function ajaxJSON() {
   $.ajax(url, {
-    type: 'GET', dataType: 'json',data:
-    {
-      // request body to get orientantion
-    },
+    type: 'GET', dataType: 'json',
     success: function(responseJSON, status, xhr) {
       addData(+responseJSON.data);
     }
