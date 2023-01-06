@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="en">
+  
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/css_config.css">
+</head>   
+<body>
+  <h1>Config parameters</h1>
+  <form>
+    <div class="container">
+      <label>Type a IP ADDRESS: </label>
+      <input
+        type="text"
+        id="ipaddress"
+        name="name"
+        required
+        placeholder="http://localhost"/>
+      <span class="validity"></span>
+  </div>
+  </form>
+  <form>
+    <div class="container">
+      <label>Type a PORT: </label>
+      <input
+        type="text"
+        id="port"
+        name="name"
+        required
+        placeholder="5000 etc."
+        minlength="1"
+        maxlength="4"/>
+      <span class="validity"></span>
+    </div>
+  </form>
+  <div class="btncontainer">
+  <button class="button-3" onclick="saveInput()">Saved Config</button>
+  <button class="button-3" onclick="backMenu()">Back to menu</button>
+  </div>
+  <script src="scripts/config.js"></script>
+</body>
+</html>
+

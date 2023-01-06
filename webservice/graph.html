@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- HTML file head: web page metadata -->
+	<head>
+		<title>HTML/JavaScript/CSS (Boostrap) examples</title>
+		<!-- jQuery -->
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		
+		<!-- Chart.js library -->
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		
+		<script type="text/javascript" src="scripts/graph.js"></script> 
+		<link rel="stylesheet" type="text/css" href="styles/css_graph.css">
+	</head>
+
+	<!-- HTML file body: web page content -->
+	<body>
+		<h1 class="text-center">Graph with pitch roll and yaw info</h1>
+		<div id="datagrabber" class="container rounded datagrabber">
+			<ul class="nav">
+				<li><div class="rounded menuitem"><span>Sample time: <span id="sampletime"></span> ms</span></div></li>  
+				<li><div class="rounded menuitem"><span>Max. number of samples: <span id="samplenumber"></span>	</span></div></li>  
+			</ul>
+			<div class="chartcontainer">
+				<canvas id="chart"></canvas>
+			</div>
+		</div>
+    <div class="container">
+    <button id="start" type="button" class="btn">Start graph</button>
+		<button id="stop" type="button" class="btn">Stop graph</button>
+    <button id="stop" onclick="goToLed()" type="button" class="btn">Go to LEDScreen</button>
+  </div>
+  </body>
+
+</html>
