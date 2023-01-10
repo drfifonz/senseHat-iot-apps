@@ -7,18 +7,17 @@ from infrastructure import Diode, Joystick, Sensors
 
 class HelloWorld(Resource):
     def get(self):
-        print("HU")
         return {"hello": "world"}
 
 
 class SenseHatParameters(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("temperature", type=str)
-        parser.add_argument("humidity", type=str)
-        parser.add_argument("orientation", type=str)
-        parser.add_argument("pressure", type=str)
-        parser.add_argument("joystick")
+        parser.add_argument("temperature", type=str, location="args")
+        parser.add_argument("humidity", type=str, location="args")
+        parser.add_argument("orientation", type=str, location="args")
+        parser.add_argument("pressure", type=str, location="args")
+        parser.add_argument("joystick", location="args")
         args = parser.parse_args()
 
         sensors = Sensors("")
