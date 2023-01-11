@@ -1,0 +1,91 @@
+#color-picker {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 500px;
+  margin: 50px;
+}
+
+.hue-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  outline: none;
+  appearance: none;
+  align-items: center;
+}
+
+.hue-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 2px #000;
+  cursor: pointer;
+}
+
+.color-preview {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f00;
+  margin-left: 15px;
+}
+.tile {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid black;
+  margin: 5px;
+  border-radius: 10px;
+}
+  
+.container {
+  display: grid;
+  grid-template-columns: repeat(8, 50px);
+  grid-template-rows: repeat(8, 50px);
+  justify-content: center;
+  gap: 10px;
+}
+h1 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  }
+.containerbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+.button-3{
+    font-family: 'Courier New', Courier, monospace;
+    margin: 10px 10px; 
+    width: 300px;
+    appearance: none;
+    background-color: #6600ff;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  
