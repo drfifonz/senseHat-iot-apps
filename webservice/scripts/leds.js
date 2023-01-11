@@ -1,8 +1,9 @@
 
 const sampleTimeSec = 0.1;                  ///< sample time in sec
 const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "http://cab6-85-221-155-134.ngrok.io/";
+const url = "http://localhost:5000/";
 var timer;
+
 
 function hslToRgb(h, s, l) {
   let r, g, b;
@@ -72,7 +73,7 @@ function getLandingPage(){
 console.log(request_body) 
 function getRequest() { 
   console.log("JSON: ",convertToJSON(request_body))
-	fetch("http://localhost:5000/",{
+	fetch(url,{
     method:'POST',
     body:JSON.stringify(request_body),
     headers: {'Content-Type': 'application/json','Accept':'application/json'},
@@ -100,5 +101,8 @@ function getRequest() {
 
 
 function submitButton(){
+    tiles.forEach(function(tile){
+      tile.style.backgroundColor = "rgb(255,255,255)"
+    })
     getRequest();
 }

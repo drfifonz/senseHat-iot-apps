@@ -1,6 +1,6 @@
 const sampleTimeSec = 0.1;                  ///< sample time in sec
 const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "http://cab6-85-221-155-134.ngrok.io/hello";
+const url = "http://localhost:5000/";
 var timer;
 
 var temperature;
@@ -27,17 +27,15 @@ function startTimer(){
   timer = setInterval(getRequest(),sampleTimeMsec);
 }
 function getRequest() {
-	const url = "http://cab6-85-221-155-134.ngrok.io/hello";
-	fetch("http://localhost:5000/hello",{
+
+	fetch(url+"hello",{
     method:'GET',
-		mode:'no-cors',
-		headers: {
-      'Content-Type': 'application/json'
-    },
+		mode:'cors',
+		headers: {'Content-Type': 'application/json','Accept':'application/json'},
   })
 	.then((response) => {
 		console.log(response.status)
-		if (response.status === 200){
+		if (response.ok){
 			console.log(response);
 			return response;
     }
