@@ -11,6 +11,9 @@ class HelloWorld(Resource):
 
 
 class SenseHatParameters(Resource):
+    sensors = Sensors("")
+    joystick = Joystick("")
+
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument("temperature", type=str, location="args")
@@ -19,19 +22,19 @@ class SenseHatParameters(Resource):
         parser.add_argument("pressure", type=str, location="args")
         parser.add_argument("joystick", location="args")
         args = parser.parse_args()
-
-        sensors = Sensors("")
-        joystick = Joystick("")
-
+        print(args.joystick, type(args.joystick))
         message = {}
         if args.temperature:
-            message["temperature"] = sensors.get_temperature(args.temperature)
+            message["temperature"] = self.sensors.get_temperature(args.temperature)
         if args.humidity:
-            message["humidity"] = sensors.get_humidity(args.humidity)
+            message["humidity"] = self.sensors.get_humidity(args.humidity)
         if args.pressure:
-            message["pressure"] = sensors.get_pressure(args.pressure)
+            message["pressure"] = self.sensors.get_pressure(args.pressure)
         if args.orientation:
-            message["orientation"] = sensors.get_orientation(args.orientation)
+            message["orientation"] = self.sensors.get_orientation(args.orientation)
+        if args.joystick is not None:
+            message["joystick-position"] = self.joystick.get_position(args.joystick)
+            message["joystick-clicks"] = self.joystick.get_clicks()
 
         code = 200 if all(list(message.values())) else 400
 

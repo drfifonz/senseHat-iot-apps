@@ -14,4 +14,4 @@ api.add_resource(SenseHatParameters, "/")
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host="localhost", port=os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=os.environ.get("PORT", 5000))

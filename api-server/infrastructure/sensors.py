@@ -1,13 +1,14 @@
 # from sense_hat import SenseHat
-
+from sense_emu import SenseHat
 
 import re
 
 
 class Sensors:
-    def __init__(self, sensehat) -> None:
-        self.sense = sensehat
-        # sense = SenseHat()
+    def __init__(self, is_emulator=False) -> None:
+        # self.sense = sensehat
+        self.sense = SenseHat()
+
         # for temporary solution
         self.temp_value = 30
         self.press_value = 1022
@@ -17,14 +18,19 @@ class Sensors:
         self.pitch = 21
         self.yaw = 3
 
+        # self.temp_value = self.sense.temp
+        # self.press_value = self.sense.pressure
+        # self.hum_value = self.sense.humidity
+        # self.roll, self.pitch, self.yaw = self.sense.get_orientation()
+
     def get_temperature(self, parameter: str) -> float:
         try:
             if parameter.lower() == "c":
                 return self.temp_value
-                # return sense.temp
+                # return self.sense.temp
             elif parameter.lower() == "f":
                 return self.temp_value * 1.8 + 32
-                # return sense.temp * 1.8 + 32
+                # return self.sense.temp * 1.8 + 32
         except AttributeError:
             return None
 
@@ -32,7 +38,7 @@ class Sensors:
         try:
             if parameter.lower() == "hpa":
                 return self.press_value
-                # return sense.pressure
+                # return self.sense.pressure
             elif parameter.lower() == "mmhg":
                 return self.press_value * 1.33
                 # return sense.pressure * 1.33
@@ -43,7 +49,7 @@ class Sensors:
         try:
             if parameter.lower() == "%":
                 return self.hum_value
-                # return sense.humidity
+                # return self.sense.humidity
             elif re.search("^[0-1]$|[0].*[0-9]", str(parameter)):
                 return self.hum_value / 100
                 # return sense.humidity
