@@ -11,6 +11,13 @@ python -m server
 ---
 ### Default address is set to `http://localhost:5000`
 
+For joystick data reading  its essential* to execute in separate terminal [read_joystick.py](/api-server/infrastructure/read_joystick.py) file.
+```bash
+cd api-server/infrastructure;
+python read_joystick.py
+```
+##### \* It is caused by cyclic saving joystick status to json file.
+
 ---
 Requests
 ---
@@ -19,54 +26,44 @@ RESTful service use JSON  data format, add `Content-Type: application/json` to h
 | KEY        | VALUE  | BODY | URL  | Method | Description | 
 | :---------:| :-----:| :----| :---:| :-----:|:-----------|
 | -     | -  | - |`/hello`| GET| Returns hello world (for test purpouse)|
-|- | - |`"temperature": string [c \| f]*`</br>`"humidity":string [% \| number in range(0-1)]`</br>`"pressure": string [hpa \| mmHg]",`</br>`"orientation":string [d \| r],`</br>`"joystick"` |`/`| GET |Returns parameters like:</br>*temperature* (celcius or farenheit)</br>*humidity* (% or in range of 0-1)</br>*pressure* (hPa or mmHg)</br>*orientation* (degrees or radians)</br>*joystick* |
-| - |-|**see below**|/| POST | Control diodes | 
+|temperature</br>humidity</br>pressure</br>orientation</br>joystick | c\|f</br> % </br> num in range of <0-1></br>r\|d</br>no value needed</br>|- |`/`| GET |Returns parameters like:</br>*temperature* (celcius or farenheit)</br>*humidity* (% or in range of 0-1)</br>*pressure* (hPa or mmHg)</br>*orientation* (degrees or radians)</br>*joystick* [x,y] position in range of <-5,5>  and clicks |
+| - |-|-|/| DELETE| Reset joystick status to [0,0] position and 0 clicks | 
+| - |-|-|/led| GET| Return json with `"diodes"` objects containing 64 arrays with current RGB status | 
+| - |-|**see below**|/led| POST | Control diodes | 
+| - |-|-|/led| DELETE| Reset LED panel | 
 
 ##### \* acceptable values
-
-
-### Example
-
-
-<div style="float: left; width: 50%;">
-  <p>Request body:</p>
-    <p>
-
-```json
-{
-    "temperature":"c",
-    "humidity":"%",
-    "pressure": "hpa",
-    "orientation":"d"
-}
+Example GET reqest to `/`:
 ```
-</p>
-</div>
-<div tyle="float: right; width: 50%;">
-    <p>Response:</p>
-    <p>
+localhost:5000/?temperature=c&humidity=%&pressure=hpa&orientation=r&joystick
+```
 
+Response:
 ```json
 {
-    "humidity": 50,
-    "orientation": [
-        332.48,
-        123.82,
-        171.97
+    "humidity": 25.36328125,
+    "joystick-clicks": 1,
+    "joystick-position": [
+        1,
+        3
     ],
-    "pressure": 1022,
-    "temperature": 30
+    "orientation": [
+        345.00078611735887,
+        0.0,
+        0.0
+    ],
+    "pressure": 1138.5234375,
+    "temperature": 45.671875
 }
 ```
-</p>
-</div>
 
 
 
-Diodes control
+
+Seting LED request body
 --
 
-Diodes control is handled by *POST* method sended to `/` url.</br>
+Diodes control is handled by *POST* method sended to `/led` url.</br>
 General body structure:
 ```json
 {

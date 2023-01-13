@@ -5,23 +5,29 @@ import re
 
 
 class Sensors:
-    def __init__(self, is_emulator=False) -> None:
+    def __init__(self) -> None:
         # self.sense = sensehat
         self.sense = SenseHat()
 
         # for temporary solution
-        self.temp_value = 30
-        self.press_value = 1022
-        self.hum_value = 50
+        try:
+            self.temp_value = self.sense.temp
+            self.press_value = self.sense.pressure
+            self.hum_value = self.sense.humidity
+            self.roll, self.pitch, self.yaw = self.sense.get_orientation().values()
+            # print(
+            #     type(self.roll),
+            #     self.roll,
+            # )
+        except OSError as e:
+            print(f"[INFO] CANT USE EMULATOR PARAMS with error: {e}")
+            self.temp_value = 30
+            self.press_value = 1022
+            self.hum_value = 50
 
-        self.roll = 100
-        self.pitch = 21
-        self.yaw = 3
-
-        # self.temp_value = self.sense.temp
-        # self.press_value = self.sense.pressure
-        # self.hum_value = self.sense.humidity
-        # self.roll, self.pitch, self.yaw = self.sense.get_orientation()
+            self.roll = 100
+            self.pitch = 21
+            self.yaw = 3
 
     def get_temperature(self, parameter: str) -> float:
         try:
