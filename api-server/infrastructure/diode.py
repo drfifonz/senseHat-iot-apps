@@ -31,3 +31,15 @@ class Diode:
         if x > 7 or y > 7 or x < 0 or y < 0:
             return False
         return True
+
+    def clear_panel(self) -> None:
+        """
+        Sets the entire LED matrix to off
+        """
+        sense.clear()
+
+    def get_panel_status(self) -> list:
+        """
+        get all leds status
+        """
+        return sense.get_pixels()

@@ -1,3 +1,4 @@
-__all__ = ["HelloWorld", "SenseHatParameters"]
+__all__ = ["HelloWorld", "SensorsController", "DiodeController"]
 
-from .controller import HelloWorld, SenseHatParameters
+from .sensors_controller import HelloWorld, SensorsController
+from .diode_controller import DiodeController
