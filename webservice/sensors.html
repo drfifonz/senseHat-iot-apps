@@ -3,7 +3,6 @@
   
 <head>
   <link rel="stylesheet" type="text/css" href="styles/css_sensors.css">
-  <script type="text/javascript" src="scripts/sensors.js"></script>
 </head>   
 <body>
   <h1>Sensors and Joystick info</h1>
@@ -24,19 +23,16 @@
   <hr>
   <h1 class="heading">Joystick</h1>
   <div class="row">
-    <div class="column left">Up:<span id="up"></span></div>
-    <div class="column">Down:<span id="down"></span></div>
-    <div class="column">Left:<snap id="left"></snap></div>
-    <div class="column right">Right:<span id="right"></span></div>
+    <div class="column left">Horizontal position:<span id="horizontal"></span></div>
+    <div class="column">Clicked:<span id="clicked"></span></div>
+    <div class="column right">Vertical position:<snap id="vertical"></snap></div>
   </div>
   </div>
   <div class="containerbtn">
-    <button class="button-3" onclick="startTimer()">Start stream data</button>
-    <button class="button-3" onclick="stopTimer()">Stop stream data</button>
+    <button id="startButton" class="button-3">Start stream data</button>
+    <button id="stopButton" class="button-3">Stop stream data</button>
     <button class="button-3 menubutton" onclick="getLandingPage()">Back to menu</button>
-    
-  </div>
-
+  <script src="scripts/sensors.js"></script>
 </body>
 </html>
 

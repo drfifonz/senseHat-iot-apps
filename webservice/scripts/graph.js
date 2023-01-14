@@ -1,7 +1,6 @@
-const sampleTimeSec = 0.1;                  ///< sample time in sec
-const sampleTimeMsec = 1000*sampleTimeSec;  ///< sample time in msec
+const sampleTimeSec = 0.1;                  ///< sample time in sec  ///< sample time in msec
 const maxSamplesNumber = 100;               ///< maximum number of samples
-
+var sampleTimeMsec;
 var xdata; ///< x-axis labels array: time stamps
 var ydata; ///< y-axis data array: random value
 var lastTimeStamp; ///< most recent time stamp 
@@ -11,23 +10,20 @@ var chart;         ///< Chart.js object
 
 var timer; ///< request timer
 
-const url = 'http://localhost:5000/'; ///< server app with JSON API
-//const url = 'http://' + window.location.hostname + '/nocache/chartdata.json'
+const url = 'https://aa54-85-221-155-134.ngrok.io/?temperature=c'; ///< server app with JSON API
 
-/**
-* @brief Generate random value.
-* @retval random number from range <-1, 1>
-*/
-function getRand() {
-  const maxVal =  1.0;
-  const minVal = -1.0;
-  return (maxVal-minVal)*Math.random() + minVal;
+function updateValue(){
+  var select = document.getElementById("sampling");
+  var value = select.options[select.selectedIndex].value;
+  var sampleTimeMsec = value;
+  select.addEventListener("change", function() {
+    sampleTimeMsec = this.value;
+  });
+  return sampleTimeMsec;
 }
+console.log(updateValue());
 
-/**
-* @brief Add new value to next data point.
-* @param y New y-axis value 
-*/
+
 function addData(y){
   if(ydata.length > maxSamplesNumber)
   {
@@ -38,46 +34,36 @@ function addData(y){
   ydata.push(y);
   chart.update();
 }
-function goToLed(){
-    parent.location = "leds.html"
+function goToMenu(){
+    parent.location = "index.html"
 }
-/**
-* @brief Remove oldest data point.
-*/
+
 function removeOldData(){
   xdata.splice(0,1);
   ydata.splice(0,1);
 }
 
-/**
-* @brief Start request timer
-*/
+
 function startTimer(){
   timer = setInterval(ajaxJSON, sampleTimeMsec);
 }
 
-/**
-* @brief Stop request timer
-*/
+
 function stopTimer(){
   clearInterval(timer);
 }
 
-/**
-* @brief Send HTTP GET request to IoT server
-*/
+
 function ajaxJSON() {
   $.ajax(url, {
     type: 'GET', dataType: 'json',
     success: function(responseJSON, status, xhr) {
-      addData(+responseJSON.data);
+      console.log(responseJSON);
+      addData(+responseJSON["temperature"]);
     }
   });
 }
 
-/**
-* @brief Chart initialization
-*/
 function chartInit()
 {
   // array with consecutive integers: <0, maxSamplesNumber-1>
@@ -103,9 +89,9 @@ function chartInit()
       labels: xdata,
       datasets: [{
         fill: false,
-        label: 'Random timeseries',
-        backgroundColor: 'rgb(255, 0, 0)',
-        borderColor: 'rgb(255, 0, 0)',
+        label: 'Temperature',
+        backgroundColor: 'rgb(102, 0, 255)',
+        borderColor: 'rgb(102, 0, 255)',
         data: ydata,
         lineTension: 0
       }]
@@ -120,7 +106,7 @@ function chartInit()
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Random value'
+            labelString: 'Temperature'
           }
         }],
         xAxes: [{
@@ -142,6 +128,5 @@ $(document).ready(() => {
   $.ajaxSetup({ cache: false }); // Web browser cache control
   $("#start").click(startTimer);
   $("#stop").click(stopTimer);
-  $("#sampletime").text(sampleTimeMsec.toString());
   $("#samplenumber").text(maxSamplesNumber.toString());
 });

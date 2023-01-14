@@ -1,9 +1,25 @@
 
 const sampleTimeSec = 0.1;                  ///< sample time in sec
-const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "http://localhost:5000/";
-var timer;
+const sampleTimeMsec = 100000*sampleTimeSec;
+const url = "https://aa54-85-221-155-134.ngrok.io/led";
 
+const hueSlider = document.querySelector('.hue-slider');
+const colorPreview = document.querySelector('.color-preview');
+
+hueSlider.addEventListener('input', updateColor);
+var request_body = {requests:[]};
+
+var tiles = document.querySelectorAll('.tile');
+
+tiles.forEach(function (tile) {
+  tile.addEventListener('click', function () {
+    this.style.backgroundColor = 'rgb('+updateColor().join(',')+')';
+    let led_info = {"position":[parseInt(this.dataset.x),parseInt(this.dataset.y)],"rgb":updateColor()}
+    console.log(this.dataset.x,this.dataset.y);
+    appendToRequests(led_info);
+  });
+ 
+});
 
 function hslToRgb(h, s, l) {
   let r, g, b;
@@ -30,10 +46,6 @@ function hslToRgb(h, s, l) {
   return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-const hueSlider = document.querySelector('.hue-slider');
-const colorPreview = document.querySelector('.color-preview');
-
-hueSlider.addEventListener('input', updateColor);
 
 
 function updateColor() {
@@ -43,36 +55,18 @@ function updateColor() {
   return rgb
 }
 
-let request_body = {requests:[]}
+
 function appendToRequests(led){
   request_body['requests'].push(led);
 }
 
 
-function convertToJSON(req){
-  var dict_to_json = JSON.stringify(req);
-  return dict_to_json
-}
-
-var tiles = document.querySelectorAll('.tile');
-
-tiles.forEach(function (tile) {
-  tile.addEventListener('click', function () {
-    this.style.backgroundColor = 'rgb('+updateColor().join(',')+')';
-    let led_info = {"position":[parseInt(this.dataset.x),parseInt(this.dataset.y)],"rgb":updateColor()}
-    appendToRequests(led_info);
-  });
- 
-});
 
 function getLandingPage(){
   parent.location = "index.html"
 } 
 
-
-console.log(request_body) 
-function getRequest() { 
-  console.log("JSON: ",convertToJSON(request_body))
+function postRequest() { 
 	fetch(url,{
     method:'POST',
     body:JSON.stringify(request_body),
@@ -80,9 +74,7 @@ function getRequest() {
     mode:'cors'
   })
 	.then((response) => { 
-    console.log(response)
 		if (response.ok){
-      console.log(response.json()); 
 			return response.json();
     }
 		else 
@@ -99,10 +91,64 @@ function getRequest() {
 	});
 }
 
+function deleteRequest() { 
+	fetch(url,{
+    method:'DELETE',
+    mode:'cors'
+  })
+	.then((response) => { 
+		if (response.ok){
+			return response.json();
+    }
+		else 
+			return Promise.reject(response);
+		
+	})
+	.catch((error) => {
+		
+		var errMsg = '<font color="red">Error: ';
+		if(error.status != null)
+			errMsg += error.statusText + ' (' + error.status + ')</font>';
+		else
+			errMsg += error.message + '</font>';
+	});
+}
+
+function getRequest() {
+	fetch(url).then(response => {
+		if (response.ok){
+			return response.json();
+    }
+		else 
+			return Promise.reject(response);
+		
+	})
+	.then(responseJSON => {
+		tiles.forEach((ele,index) =>{
+      ele.style.background = 'rgb('+responseJSON["diodes"][index].join(',')+')';
+    });
+	})
+	.catch((error) => {
+		var errMsg = '<font color="red">Error: ';
+		if(error.status != null)
+			errMsg += error.statusText + ' (' + error.status + ')</font>';
+		else
+			errMsg += error.message + '</font>';
+	});
+}
+
+
+function clearButton(){
+    tiles.forEach(function(tile){
+      tile.style.backgroundColor = "rgb(0,0,0)"
+    });
+    deleteRequest();
+}
 
 function submitButton(){
-    tiles.forEach(function(tile){
-      tile.style.backgroundColor = "rgb(255,255,255)"
-    })
-    getRequest();
+    
+    postRequest();
+    request_body = {requests:[]};
 }
+
+setInterval(getRequest,sampleTimeMsec) //getting a values of led in interval time

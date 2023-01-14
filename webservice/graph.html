@@ -16,7 +16,7 @@
 		<!-- Chart.js library -->
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 		
-		<script type="text/javascript" src="scripts/graph.js"></script> 
+		
 		<link rel="stylesheet" type="text/css" href="styles/css_graph.css">
 	</head>
 
@@ -25,7 +25,13 @@
 		<h1 class="text-center">Graph with pitch roll and yaw info</h1>
 		<div id="datagrabber" class="container rounded datagrabber">
 			<ul class="nav">
-				<li><div class="rounded menuitem"><span>Sample time: <span id="sampletime"></span> ms</span></div></li>  
+				<li><div class="rounded menuitem"><span>Sample time: 
+					<select id="sampling">
+					<option value="200">200</option>
+					<option value="300">300</option>
+					<option value="400">400</option>
+					<option value="100" selected>100</option>
+				</select></div></li>  
 				<li><div class="rounded menuitem"><span>Max. number of samples: <span id="samplenumber"></span>	</span></div></li>  
 			</ul>
 			<div class="chartcontainer">
@@ -35,8 +41,9 @@
     <div class="container">
     <button id="start" type="button" class="btn">Start graph</button>
 		<button id="stop" type="button" class="btn">Stop graph</button>
-    <button id="stop" onclick="goToLed()" type="button" class="btn">Go to LEDScreen</button>
+    <button id="stop" onclick="goToMenu()" type="button" class="btn">Back to Menu</button>
   </div>
+	<script type="text/javascript" src="scripts/graph.js"></script> 
   </body>
 
 </html>
