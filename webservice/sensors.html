@@ -1,0 +1,38 @@
+<!DOCTYPE html> 
+<html lang="en">
+  
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/css_sensors.css">
+</head>   
+<body>
+  <h1>Sensors and Joystick info</h1>
+  <div class="container">
+    <h1 class="heading">Weather Condition</h1>
+    <div class="row">
+    <div class="column left">Temp:<span id="temperature"></span><span>&#176;</span></div>
+    <div class="column">Press:<span id="pressure"></span> HPa</div>
+    <div class="column right">Hum:<span id="humidity"></span> %</div>
+  </div>
+    <hr>
+    <h1 class="heading">Orientation</h1>
+    <div class="row">
+      <div class="column left">Roll:<span id="roll"></span><span>&#176;</span></div>
+      <div class="column">Pitch:<span id="pitch"></span><span>&#176;</span></div>
+      <div class="column right">Yaw:<span id="yaw"></span><span>&#176;</span></div>
+  </div>
+  <hr>
+  <h1 class="heading">Joystick</h1>
+  <div class="row">
+    <div class="column left">Horizontal position:<span id="horizontal"></span></div>
+    <div class="column">Clicked:<span id="clicked"></span></div>
+    <div class="column right">Vertical position:<snap id="vertical"></snap></div>
+  </div>
+  </div>
+  <div class="containerbtn">
+    <button id="startButton" class="button-3">Start stream data</button>
+    <button id="stopButton" class="button-3">Stop stream data</button>
+    <button class="button-3 menubutton" onclick="getLandingPage()">Back to menu</button>
+  <script src="scripts/sensors.js"></script>
+</body>
+</html>
+

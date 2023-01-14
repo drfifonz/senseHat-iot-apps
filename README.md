@@ -9,10 +9,10 @@ IoT system containg web, mobile and desktop apps to operate **Sense HAT** sensor
 </br>
 Authors:</br>
 
-- [Maksymilian Pływaczyk](https://github.com/Maksymilian-Plywaczyk)
-- [Kuba Marciniak](https://github.com/Kuba-Mar)
-- [Jakub Grabowski](https://github.com/jakgrab)
-- [Filip Patyk](https://github.com/drfifonz)
+- [Maksymilian Pływaczyk](https://github.com/Maksymilian-Plywaczyk) &nbsp;&nbsp; [Webservice](/webservice/)
+- [Kuba Marciniak](https://github.com/Kuba-Mar) &nbsp;&nbsp; [Desktop app](/desktop-app/)
+- [Jakub Grabowski](https://github.com/jakgrab) &nbsp;&nbsp; [Mobile app - android](/mobile-app/)
+- [Filip Patyk](https://github.com/drfifonz) &nbsp;&nbsp; [API server](/api-server/)
 
 ---
 How to run
@@ -24,9 +24,7 @@ conda env create -f env.yml
 ```
 or install manualy dependencies from [env.yml](/env.yml) file. 
 </br>
-Start local http server by running following command:
-```bash
-```
+
 
 Sense HAT emulation
 ----
