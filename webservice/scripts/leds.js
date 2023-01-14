@@ -1,20 +1,27 @@
 
 const sampleTimeSec = 0.1;                  ///< sample time in sec
-const sampleTimeMsec = 100000*sampleTimeSec;
-const url = "https://aa54-85-221-155-134.ngrok.io/led";
+const sampleTimeMsec = 10000*sampleTimeSec;
+var url = "https://d1b3-85-221-155-134.ngrok.io"; // default value of url
 
 const hueSlider = document.querySelector('.hue-slider');
 const colorPreview = document.querySelector('.color-preview');
-
-hueSlider.addEventListener('input', updateColor);
-var request_body = {requests:[]};
-
+var new_url = localStorage.getItem('url');
 var tiles = document.querySelectorAll('.tile');
+var request_body = {requests:[]};
+hueSlider.addEventListener('input', updateColor);
+
+function checkNewUrl(){
+if (new_url){
+  url = new_url;
+}
+}
+checkNewUrl();
+
 
 tiles.forEach(function (tile) {
   tile.addEventListener('click', function () {
     this.style.backgroundColor = 'rgb('+updateColor().join(',')+')';
-    let led_info = {"position":[parseInt(this.dataset.x),parseInt(this.dataset.y)],"rgb":updateColor()}
+    let led_info = {"position":[parseInt(this.dataset.y),parseInt(this.dataset.x)],"rgb":updateColor()}
     console.log(this.dataset.x,this.dataset.y);
     appendToRequests(led_info);
   });
@@ -67,7 +74,7 @@ function getLandingPage(){
 } 
 
 function postRequest() { 
-	fetch(url,{
+	fetch(url+'led',{
     method:'POST',
     body:JSON.stringify(request_body),
     headers: {'Content-Type': 'application/json','Accept':'application/json'},
@@ -92,7 +99,7 @@ function postRequest() {
 }
 
 function deleteRequest() { 
-	fetch(url,{
+	fetch(url+'led',{
     method:'DELETE',
     mode:'cors'
   })
@@ -115,7 +122,7 @@ function deleteRequest() {
 }
 
 function getRequest() {
-	fetch(url).then(response => {
+	fetch(url+'led').then(response => {
 		if (response.ok){
 			return response.json();
     }

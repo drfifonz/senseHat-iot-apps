@@ -1,15 +1,21 @@
 const sampleTimeSec = 0.1;                  ///< sample time in sec
-const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "https://aa54-85-221-155-134.ngrok.io/?temperature=c&humidity=%&pressure=hPa&orientation=d&joystick";
-var timer;
+const sampleTimeMsec = 10000*sampleTimeSec;
+var url = "https://d1b3-85-221-155-134.ngrok.io/"; // default value of url
+var new_url = localStorage.getItem('url');
 
-var temperature;
+var timer;
+function checkNewUrl(){
+if (new_url){
+	url = new_url;
+}
+}
+checkNewUrl();
 	
 var buttonStart = document.getElementById("startButton");
 var buttonStop = document.getElementById("stopButton");
 
 buttonStart.addEventListener("click",function(){
-	timer = setInterval(getRequest,1000);
+	timer = setInterval(getRequest,sampleTimeMsec);
 });
 
 buttonStop.addEventListener("click",function(){
@@ -23,7 +29,7 @@ function getLandingPage(){
 
 function getRequest() {
 
-	fetch(url).then(response => {
+	fetch(url+"?temperature=c&humidity=%&pressure=hPa&orientation=d&joystick").then(response => {
 		if (response.ok){
 			return response.json();
     }

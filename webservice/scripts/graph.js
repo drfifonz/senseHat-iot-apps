@@ -1,6 +1,5 @@
 const sampleTimeSec = 0.1;                  ///< sample time in sec  ///< sample time in msec
-const maxSamplesNumber = 100;               ///< maximum number of samples
-var sampleTimeMsec;
+const maxSamplesNumber =100;               ///< maximum number of samples
 var xdata; ///< x-axis labels array: time stamps
 var ydata; ///< y-axis data array: random value
 var lastTimeStamp; ///< most recent time stamp 
@@ -10,20 +9,29 @@ var chart;         ///< Chart.js object
 
 var timer; ///< request timer
 
-const url = 'https://aa54-85-221-155-134.ngrok.io/?temperature=c'; ///< server app with JSON API
+var url = 'https://d1b3-85-221-155-134.ngrok.io/'; // default value of url
 
+var new_url = localStorage.getItem('url');
+var select = document.getElementById("sampling");
+function checkNewUrl(){
+if (new_url){
+  url = new_url;
+}
+}
+checkNewUrl();
 function updateValue(){
-  var select = document.getElementById("sampling");
+
   var value = select.options[select.selectedIndex].value;
   var sampleTimeMsec = value;
-  select.addEventListener("change", function() {
-    sampleTimeMsec = this.value;
-  });
   return sampleTimeMsec;
+
 }
-console.log(updateValue());
 
-
+select.addEventListener("change", function() {
+    var new_sampleTimeMsec = parseInt(updateValue());
+    localStorage.setItem('sampling_rate',new_sampleTimeMsec);
+    console.log(new_sampleTimeMsec);
+  });
 function addData(y){
   if(ydata.length > maxSamplesNumber)
   {
@@ -45,7 +53,9 @@ function removeOldData(){
 
 
 function startTimer(){
-  timer = setInterval(ajaxJSON, sampleTimeMsec);
+  new_sampleTime = localStorage.getItem('sampling_rate')
+  console.log(new_sampleTime)
+  timer = setInterval(ajaxJSON, parseInt(new_sampleTime));
 }
 
 
@@ -55,7 +65,7 @@ function stopTimer(){
 
 
 function ajaxJSON() {
-  $.ajax(url, {
+  $.ajax(url+'?temperature=c', {
     type: 'GET', dataType: 'json',
     success: function(responseJSON, status, xhr) {
       console.log(responseJSON);

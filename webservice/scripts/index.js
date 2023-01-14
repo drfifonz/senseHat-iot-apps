@@ -17,5 +17,3 @@ function getSensors(){
 function getConfig(){
   parent.location = "config.html"
 }
-var url = getUrl()
-console.log(url)  
