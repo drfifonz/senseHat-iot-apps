@@ -1,52 +1,53 @@
 const sampleTimeSec = 0.1;                  ///< sample time in sec
-const sampleTimeMsec = 1000*sampleTimeSec;
-const url = "http://localhost:5000/";
+const sampleTimeMsec = 10000*sampleTimeSec;
+var url = "https://d1b3-85-221-155-134.ngrok.io/"; // default value of url
+var new_url = localStorage.getItem('url');
+
 var timer;
-
-var temperature;
-	
-var humidity;
-var pressure;
-var orientantion;
-
-function updateTemperature(response){
-	var temp = document.getElementById("temperature").value;
-	temp = response["temperature"] 
-	
+function checkNewUrl(){
+if (new_url){
+	url = new_url;
 }
+}
+checkNewUrl();
+	
+var buttonStart = document.getElementById("startButton");
+var buttonStop = document.getElementById("stopButton");
+
+buttonStart.addEventListener("click",function(){
+	timer = setInterval(getRequest,sampleTimeMsec);
+});
+
+buttonStop.addEventListener("click",function(){
+	clearInterval(timer);
+});
 
 function getLandingPage(){
   parent.location = "index.html";
 }
-function stopTimer(){
-  clearInterval(timer);
-}
 
 
-function startTimer(){
-  timer = setInterval(getRequest(),sampleTimeMsec);
-}
 function getRequest() {
 
-	fetch(url+"hello",{
-    method:'GET',
-		mode:'cors',
-		headers: {'Content-Type': 'application/json','Accept':'application/json'},
-  })
-	.then((response) => {
-		console.log(response.status)
+	fetch(url+"?temperature=c&humidity=%&pressure=hPa&orientation=d&joystick").then(response => {
 		if (response.ok){
-			console.log(response);
-			return response;
+			return response.json();
     }
 		else 
-			return Promise.reject(response);
+			return Promise.reject(response);	
 		
 	})
-	.then((responseJSON) => {
-		// document.getElementById("response").value = JSON.stringify(responseJSON);
-		// document.getElementById("json").value = responseJSON.data;
-		
+	.then(responseJSON => {
+		console.log(responseJSON["temperature"]);
+		document.getElementById("temperature").innerHTML = responseJSON["temperature"].toFixed(2);
+		document.getElementById("pressure").innerHTML = responseJSON["pressure"].toFixed(2);
+		document.getElementById("humidity").innerHTML = responseJSON["humidity"].toFixed(2);
+		document.getElementById("roll").innerHTML = responseJSON["orientation"][0];
+		document.getElementById("pitch").innerHTML = responseJSON["orientation"][1];
+		document.getElementById("yaw").innerHTML = responseJSON["orientation"][2];
+		document.getElementById("horizontal").innerHTML = responseJSON["joystick-position"][0]
+		document.getElementById("vertical").innerHTML = responseJSON["joystick-position"][1]
+		document.getElementById("clicked").innerHTML = responseJSON["joystick-clicks"]
 	})
 	.catch((error) => {
 		var errMsg = '<font color="red">Error: ';
@@ -55,15 +56,4 @@ function getRequest() {
 		else
 			errMsg += error.message + '</font>';
 	});
-}
-
-
-function example(){
-var params = new URLSearchParams();
-params.append("key1", "value1");
-params.append("key2", "value2");
-
-var url = "http://example.com/api/endpoint?" + params.toString();
-
-console.log(url)
 }

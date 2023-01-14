@@ -6,13 +6,17 @@ function saveInput() {
   var inputValuePORT = document.getElementById("port").value;
   var newIP = document.getElementById("setIP");
   // Save the input value to local storage
-  localStorage.setItem("savedInputIP", inputValueIP);
-  localStorage.setItem("savedInputPort", inputValuePORT);
-  var savedIP = localStorage.getItem("savedInputIP");
-  var savedPort = localStorage.getItem("savedInputPort");
-  correctIP = savedIP+':'+savedPort+'/'
-  newIP.textContent = correctIP
-  return correctIP
+  if (inputValuePORT){
+    correctIP = inputValueIP+':'+inputValuePORT+'/';
+  }
+  else if (inputValueIP.endsWith('/')){
+    correctIP = inputValueIP;
+  }
+  else{
+    correctIP = inputValueIP+'/';
+  }
+  newIP.textContent = correctIP;
+  localStorage.setItem('url',correctIP);
 }
 function backMenu(){
   parent.location = "index.html"
