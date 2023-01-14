@@ -15,10 +15,7 @@ class Sensors:
             self.press_value = self.sense.pressure
             self.hum_value = self.sense.humidity
             self.roll, self.pitch, self.yaw = self.sense.get_orientation().values()
-            # print(
-            #     type(self.roll),
-            #     self.roll,
-            # )
+
         except OSError as e:
             print(f"[INFO] CANT USE EMULATOR PARAMS with error: {e}")
             self.temp_value = 30
@@ -30,6 +27,11 @@ class Sensors:
             self.yaw = 3
 
     def get_temperature(self, parameter: str) -> float:
+        """
+        Gets temperature value specified by parameter \n
+        c for celcius temperature \n
+        f for farenheit temperature
+        """
         try:
             if parameter.lower() == "c":
                 return self.temp_value
@@ -41,6 +43,10 @@ class Sensors:
             return None
 
     def get_pressure(self, parameter: str) -> float:
+        """
+        Gets pressure value specified by parameter \n
+        hpa or mmhg
+        """
         try:
             if parameter.lower() == "hpa":
                 return self.press_value
@@ -52,6 +58,11 @@ class Sensors:
             return None
 
     def get_humidity(self, parameter: str) -> float:
+        """
+        Gets humidity value specified by parameter \n
+        % or numeric value
+        """
+
         try:
             if parameter.lower() == "%":
                 return self.hum_value
@@ -63,6 +74,11 @@ class Sensors:
             return None
 
     def get_orientation(self, parameter: str) -> list:
+        """
+        Gets orientation value specified by parameters \n
+        d for degrees \n
+        r for radians
+        """
         try:
             # orientation = sense.get_orientation()
             orientation = [self.roll, self.pitch, self.yaw]

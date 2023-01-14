@@ -21,7 +21,7 @@ class SensorsController(Resource):
         parser.add_argument("pressure", type=str, location="args")
         parser.add_argument("joystick", location="args")
         args = parser.parse_args()
-        # print(args.joystick, type(args.joystick))
+
         message = {}
         if args.temperature:
             message["temperature"] = sensors.get_temperature(args.temperature)
@@ -54,8 +54,6 @@ class SensorsController(Resource):
             message = "No specified parameter"
             code = 400
 
-        # response.headers["Access-Control-Allow-Origin"] = "http://localhost:5000"
         response = make_response(message, code)
         response.headers["Access-Control-Allow-Origin"] = "*"
         return response
-        # return message, code, {"Access-Control-Allow-Origin": "*"}

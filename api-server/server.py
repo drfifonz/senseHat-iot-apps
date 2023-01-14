@@ -20,11 +20,6 @@ api.add_resource(SensorsController, "/")
 api.add_resource(DiodeController, "/led")
 
 
-# def flask_app():
-#     app.debug = DEBUG
-#     app.run(host="0.0.0.0", port=os.environ.get("PORT", 5000))
-
-
 if __name__ == "__main__":
 
     app.debug = DEBUG
