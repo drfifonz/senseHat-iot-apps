@@ -1,7 +1,7 @@
 
 const sampleTimeSec = 0.1;                  ///< sample time in sec
-const sampleTimeMsec = 10000*sampleTimeSec;
-var url = "https://d1b3-85-221-155-134.ngrok.io"; // default value of url
+const sampleTimeMsec = 100000*sampleTimeSec;
+var url = "http://2bfe-85-221-155-134.ngrok.io/"; // default value of url
 
 const hueSlider = document.querySelector('.hue-slider');
 const colorPreview = document.querySelector('.color-preview');

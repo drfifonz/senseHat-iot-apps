@@ -1,6 +1,6 @@
 const sampleTimeSec = 0.1;                  ///< sample time in sec
 const sampleTimeMsec = 10000*sampleTimeSec;
-var url = "https://d1b3-85-221-155-134.ngrok.io/"; // default value of url
+var url = "http://2bfe-85-221-155-134.ngrok.io/"; // default value of url
 var new_url = localStorage.getItem('url');
 
 var timer;
@@ -45,9 +45,9 @@ function getRequest() {
 		document.getElementById("roll").innerHTML = responseJSON["orientation"][0];
 		document.getElementById("pitch").innerHTML = responseJSON["orientation"][1];
 		document.getElementById("yaw").innerHTML = responseJSON["orientation"][2];
-		document.getElementById("horizontal").innerHTML = responseJSON["joystick-position"][0]
-		document.getElementById("vertical").innerHTML = responseJSON["joystick-position"][1]
-		document.getElementById("clicked").innerHTML = responseJSON["joystick-clicks"]
+		document.getElementById("horizontal").innerHTML = responseJSON["joystickPosition"][0]
+		document.getElementById("vertical").innerHTML = responseJSON["joystickPosition"][1]
+		document.getElementById("clicked").innerHTML = responseJSON["joystickClicks"]
 	})
 	.catch((error) => {
 		var errMsg = '<font color="red">Error: ';
